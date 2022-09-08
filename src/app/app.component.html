@@ -1,0 +1,62 @@
+<div class="container">
+  <div class="row mt-2 mb-2">
+    <div class="col-12">
+      <h1>
+        <u>Upload Multiple Files & Capture Status of each file and the Progress</u></h1>
+        <ul class="mt-2">
+          <li>Select Multiple Files.</li>
+          <li>Upload Files.</li>
+          <li>It shows the progress of reading each file.</li>
+          <li>After all files are uploaded, it shows the Status of each file. Error or Success.</li>
+          <li>If there's a server side error or network issue whenever particular file is being uploaded, it doesn't break the uploading of other files. 
+            It continues until reaches the last file is uploaded. </li>
+          <li>This doesn't work Sequntially but Parallely.</li>
+        </ul>
+    </div>
+  </div>
+  <div class="row p-2">
+    <div class="col-4">
+      <input
+        class="form-control"
+        type="file"
+        id="formFileMultiple"
+        multiple
+        (change)="addFiles($event)"
+      />
+    </div>
+    <div class="col-8">
+      <ng-container *ngIf="toUploadFilesList">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">File Name</th>
+              <th scope="col">Upload Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of toUploadFilesList">
+              <td>{{item.file.name}}</td>
+              <td>
+                <tr>
+                  <td>Upload Progress&nbsp;
+                    <h3>{{item.uploadStatus.progressCount}}</h3>
+                  </td>
+                  <td>
+                    <h4 class="text-danger">{{item.uploadStatus.errorMessage}}</h4>
+                  </td>
+                </tr>
+              </td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="2">
+                <button type="button" class="btn btn-primary" (click)="uploadFiles()">Upload Files</button>
+              </td>
+            </tr>
+          </tfoot>
+        </table>
+      </ng-container>
+    </div>
+</div>
+<router-outlet></router-outlet>
